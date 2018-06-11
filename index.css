@@ -1,0 +1,127 @@
+body{
+   
+    margin: 0px;
+    padding:0px;
+    font-family: 'Philosopher', sans-serif;
+    
+}
+
+.grid-container{
+    display:grid;
+    width:60%;
+    margin:10px auto 0px;
+    box-sizing: border-box;
+    box-shadow:2px 2px 2px 2px;
+    background-color: blueviolet;
+}
+
+
+.item1{
+    height:80px;
+    /* border:1px solid red; */
+    text-align: center;
+    font-size: 140%;
+    border-radius: 10px;
+  
+}
+
+.item2{
+    height:50px;
+    /* border:1px solid green; */
+    display: flex;
+    justify-content:space-between;
+    
+    
+}
+
+.item2 .point1{
+    width:20%;
+    border: 5px solid rgb(226, 223, 25);
+    text-align: center;
+    line-height: 50px;
+    font-family: 'Electrolize', sans-serif;
+    font-size: 140%;
+    /* border:20px;  */
+    box-sizing: border-box;
+   border-radius: 30px;
+   background-color:dodgerblue;
+   
+}
+
+.item2 .point2{
+    width:20%;
+    border: 5px solid rgb(175, 212, 41);
+    text-align: center;
+    line-height: 50px;
+    font-family: 'Skranji', cursive;
+    font-size: 140%;
+    /* border:10px;  */
+    box-sizing: border-box;
+    /* border:1px solid green; */
+    background-color:darkseagreen;
+    border-radius: 30px;
+    
+}
+
+
+.item3{
+    height:70px;
+    /* border:1px solid brown; */
+    text-align: center;
+    line-height: 70px;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 150%;
+    
+}
+
+.item3 .answer{
+    border-bottom: 2px solid white;
+    width:70px;
+    margin-bottom:10px;
+}
+
+
+.item4{
+    height:70px;
+    /* border:1px solid black; */
+    display:flex;
+    justify-content:space-around;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 150%;
+}
+
+.item4 .input{
+ border:3px solid greenyellow; 
+width:70px;
+border-radius:50%;
+text-align: center;
+line-height:70px;
+box-sizing: border-box;
+box-shadow: 2px 1px 2px 1px;
+cursor:pointer;
+}
+
+.item4 .input:hover{
+    background-color: azure;
+
+}
+.item4 .input:active{
+    background-color:burlywood;
+    box-shadow: 1px 1px rosybrown;
+}
+
+.item5{
+    height:50px;
+    /* border: 1px solid rebeccapurple; */
+    display: flex;
+    justify-content: center;
+
+}
+
+.item5 input{
+    margin-top:15px;
+    
+
+}

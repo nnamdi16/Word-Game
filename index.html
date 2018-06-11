@@ -1,0 +1,358 @@
+<!Doctype>
+<html>
+
+<head>
+    <title>WORD GAME</title>
+    <link rel="stylesheet" href="./index.css">
+    <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Skranji" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Reem+Kufi" rel="stylesheet">
+</head>
+
+<body>
+    <div class="grid-container">
+
+
+
+        <div class="item1">
+            <h1>Word Game</h1>
+        </div>
+        <div class="item2">
+            <span class="point1" id="newTimer">Timer</span>
+            <span class="point2" id="newScore">ScoreBoard</span>
+
+        </div>
+
+        <div class="item3" id="container"></div>
+        <div class="item4" id="container1"></div>
+
+        <div class="item5">
+            <span>
+                <input type="button" value="PLAY" id="levels">
+
+            </span>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+
+        function timer() {
+            var i = 120;
+            var timeCount = setInterval(function () {
+                document.getElementById("newTimer").innerHTML = i;
+                i--;
+                if (i < 0) {
+                    clearInterval(timeCount);
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        var timeCount = new timer();
+
+
+
+        var word;
+        var EmptyString = "";
+        var score = 0;
+        // var stop = x.length;
+
+        // To generate levels
+
+        //Array of objects
+
+        var dictionary = [{
+            name: "bemuzzle",
+            words: ["BE", "ME", "BEE", "BEL", "EEL", "ELM", "EME", "EMU", "LEE", "ZEE", "BLUE", "BUZZ", "LUBE", "BELL", "MULE", "BEZEL", "BLUME"]
+        },
+        {
+            name: "mazzards",
+            words: [
+                "AM", "AS", "ARM", "DAM", "MAD", "MAR", "RAM", "SAD", "ARMS", "DAMS", "MADS", "MARS", "RAMS", "RAZZ", "DRAMA", "DRAMS"
+            ]
+        },
+        {
+            name: "quadplex",
+            words: [
+
+                "AX", "DA", "DE", "PA", "PE", "UP", "APE", "AXE", "LAD", "LAP", "LAX", "PAD", "PEA", "APEX", "AXLE", "DEAL", "DUAL", "LAUD", "LEAD", "LEAP", "PALE", "PLEA", "QUAD",
+                "AXLED", "DUPLE", "EQUAL", "PEDAL", "PLEAD", "PULED", "QUALE"
+            ]
+        },
+        {
+            name: "kolkhozy",
+            words: [
+                "LO", "OH", "OOH", "ZOO", "HOLY", "HOOK", "LOOK", "YOLK", "HOOKY", "HOOLY"]
+        },
+
+        {
+            name: "banjaxed",
+            words: [
+                "AN", "BE",
+                "AND", "AXE", "BAD", "BAN", "BED", "DEN", "END",
+                "BADE", "BAND", "BANE", "BEAD", "BEAN", "BEND", "DEAN", "JEAN",
+                "BAAED", "BANDA", "BANED"
+
+
+            ]
+        },
+        {
+            name: "jambeaux",
+            words: [
+
+                "AM", "BE",
+                "AXE", "BAM", "JAM", "MAX",
+                "BEAM", "EXAM", "JAMB ",
+                " AMEBA  ", "BEAUX ", "JAMBE"
+
+            ]
+        },
+
+        {
+            name: "blintzes ",
+            words: [
+                "BE", "IN", "IS", "IT",
+                "BET", "BIN", "BIT", "LET", "LIE", "LIT", "NET", "NIL", "SET", "SIN", "SIT", "TEN", "TIN",
+                "BELT", "BENT", "BEST", "BETS", "BILE", "BINS", "BITE", "BITS", "ISLE", "LENS", "LENT", "LEST", "LETS", "LIES", "LINE", "NEST", "NETS", "SENT", "SILT", "SINE", "SITE", "SIZE", "TENS", "TIES", "TILE", "TINS", "ZEST",
+                "BELTS", "BENTS", "BITES", "BLEST", "INLET", "TILES"
+            ]
+        },
+        {
+            name: "jambeaux",
+            words: [
+
+
+
+            ]
+        },
+
+
+        ];
+
+        var currentWord = 2;
+        var searchDiv = "";
+        var count = 0;
+        var wrdlen = 2;
+        var contain = document.getElementById('container');
+        var inputDivs = "";
+
+        //----------------------------------------------
+        //Initialization function
+        function init() {
+            wrdlen = 2;
+            count++;
+            newLevel();
+            generateInput(wrdlen);
+            buttonClick();
+
+        }
+        //----------------------------------------------
+
+        // ---------------------------------------------
+        // Input generation
+        function generateInput(wrdlen) {
+
+            inputDivs = "";
+
+            for (var k = 0; k < wrdlen; k++) {
+                inputDivs = inputDivs + `<div class="answer"></div>`
+
+            }
+
+            // document.getElementById('container').innerHTML = "";
+            document.getElementById('container').innerHTML = inputDivs;
+            // } else {
+            //     wrdlen = 2;
+
+            //     count = count + 1;
+            //     newLevel();
+            //     return;
+            // }
+        }
+        generateInput(wrdlen);
+        //input generation ends
+        //----------------------------------------------
+
+        //----------------------------------------------
+        //Word Checker
+
+        function checkWord(dWord) {
+            isThere = false;
+            dict = dictionary[count].words;
+            for (var i = 0; i < dict.length; i++) {
+                console.log(dWord + " == " + dict[i])
+                if (dWord == dict[i]) {
+                    isThere = true;
+                    break;
+                }
+            }
+            return isThere;
+
+        }
+
+        //----------------------------------------------
+
+
+        //----------------------------------------------
+        //Clear Answer Field
+        function clearField() {
+            myDivs = document.getElementsByClassName('answer');
+            for (var i = 0; i < myDivs.length; i++) {
+                myDivs[i].innerText = "";
+            }
+        }
+
+        //----------------------------------------------
+
+        //----------------------------------------------
+        //Score Board
+        function scoreBoard() {
+
+            score += 10;
+            document.getElementById("newScore").innerHTML = score + "pts";
+        }
+        //----------------------------------------------
+
+        //-----------------------------------------------
+        // Question generation
+        var newWord = [];
+        function newLevel() {
+            document.getElementById('container1').innerHTML = " ";
+            newWord = [];
+            newWord = dictionary[count]['name'];
+            // alert(count);
+            for (var j = 0; j < newWord.length; j++) {
+                searchDiv = searchDiv + `<div class ="input">${newWord.charAt(j).toUpperCase()}</div>`;
+                // console.log(j)
+            }
+            document.getElementById("container1").innerHTML = searchDiv;
+        }
+
+        newLevel();
+
+        /*to gemnerate inputs  */
+        // generateInput(wrdlen);
+        /*end generate field*/
+        // setTimeout(function () {
+        //     alert("New game");
+        //     console.log(newWord);
+        //     searchDiv = " ";
+        //     init();
+        // }, 3000)
+
+        //-----------------------------------------------
+        function gameOver() {
+            //     document.getElementById("newPoints")
+            alert('Game Over');
+            location.reload();
+        }
+        //--------------------------------------------------------
+
+        //----------------------------------------------
+        //Clicking function
+        function buttonClick() {
+            var clickButton = document.querySelectorAll('.input');
+            var answerButton = -1;
+            var x = document.getElementsByClassName('answer');
+            var stop = x.length;
+            var word = "";
+
+            for (var i = 0; i < clickButton.length; i++) {
+                clickButton[i].addEventListener('click', function (event) {
+
+                    // console.log(clickButton)
+
+                    var pickedButton = event.target.innerText;
+                    word = word + pickedButton;
+                    console.log(pickedButton);
+                    console.log(word)
+                    // console.log(clickButton);
+                    answerButton += 1;
+                    // alert(answerButton);
+                    if (answerButton < clickButton.length) {
+                        if (answerButton > (stop - 1)) {
+                            alert('ye it did')
+
+                            return;
+                        }
+
+                        x[answerButton].innerHTML = pickedButton;
+                    }
+                    else {
+                        console.log(pickedButton)
+                    }
+                    console.log(answerButton);
+                    console.log(wrdlen);
+                    console.log(answerButton + "==" + (wrdlen - 1))
+
+
+                    if (answerButton == (wrdlen - 1)) {
+
+                        ans = checkWord(word);
+
+                        console.log(ans)
+
+                        if (ans) {
+
+
+                            ++wrdlen;
+                            if (wrdlen > 5) {
+                                searchDiv = " ";
+                                init();
+                            }
+                            console.log(wrdlen)
+
+
+                            setTimeout(function () {
+                                alert('Good Job');
+                                generateInput(wrdlen);
+                                answerButton = -1;
+                                x = document.getElementsByClassName('answer');
+                                stop = x.length;
+
+
+
+
+                            }, 100)
+
+                            scoreBoard();
+                            console.log(scoreBoard);
+                        }
+
+
+                        else {
+                            setTimeout(function () {
+                                alert('wrong');
+                                clearField();
+                                answerButton = -1;
+                                x = document.getElementsByClassName('answer');
+                                stop = x.length;
+                            }, 100)
+                        }
+                        word = "";
+                        // answerButton = -1;
+                    }
+
+                }
+
+
+
+
+                )
+
+
+
+            }
+        }
+        buttonClick();
+
+        var timerID = setTimeout(gameOver, 20000);
+
+        clearTimeout(timerID);
+
+
+    </script>
+</body>
+
+</html>
